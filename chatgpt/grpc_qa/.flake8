@@ -1,0 +1,9 @@
+[flake8]
+exclude =
+  vector_store
+  proto
+  script
+  tests
+  .poetry.lock
+  .pyproject.toml
+  README.md

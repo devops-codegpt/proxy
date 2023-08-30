@@ -1,0 +1,125 @@
+name: pipeline5 # 流水线名字，可任意取
+description: pipeline5 # 流水线描述
+project: project01 # 流水线所属项目
+enable: true # 是否启用
+schedulerConfig: # 用于调度在哪个 node 节点上运行该流水线
+  name: name1
+  nodeName: node2 # 节点名称
+  nodeSelectors: # 节点标签
+    - label2
+  requestedResource: # 所需节点资源配置
+    milliCPU: 256
+    memory: 512
+    storage: 1024
+  toleratesUnschedulable: true
+triggerConfig: # 该流水线由哪个事件进行触发，可选为 gerrit、定时触发(crontab)或手动触发(manual)
+  triggerName: gerrit # 触发器名称
+  triggerEnable: true
+  upstreamEvent:
+    name: gerrit # 触发源名称
+    events: # 事件列表
+      - name: PatchsetCreated
+        uploaderName: ''
+        commitMessage: ''
+        excludeDrafts: false
+        excludeTrivialRebase: false
+        excludeNoCodeChange: false
+        excludePrivateChanges: false
+        excludeWIPChanges: false
+    projects: # gerrit上对应 project git 配置
+      - repo:
+          type: Plain
+          pattern: ''
+        branches: []
+        topics: []
+        filePaths: []
+        forbiddenFilePaths: []
+  crontabEvent: # 定时触发配置
+    type: FIXED
+    dayOfWeek: []
+    from: ''
+    to: ''
+    interval: 0
+notifierConfig: # 流水运行完成后的通知配置
+  - notifierName: email # 通知器
+    notifierEnable: true
+    notifierEvents:
+      - start
+      - success
+    users:
+      - example1@email.com
+      - example2@email.com
+    groups:
+      - testA
+      - testB
+variableConfig: # 整个流水线运行所需的环境变量配置
+  - variableName: env1
+    variableValue: '1'
+    description: ''
+  - variableName: env2
+    variableValue: '2'
+    description: ''
+stageConfig: # 流水线运行的多个阶段(stage)配置，多个阶段串行运行。每个阶段可以执行多个任务(task)，任务之间可并行也可串行运行，具体依赖于任务中的配置项 depends
+  - stageName: 阶段1
+    tasks:
+      - name: job1
+        description: job1
+        cmd: '' # 命令名称
+        cmdArgs: [] # 命令参数
+        depends: []
+        maxLiveLog: 1000
+        fileContent: |
+          #!/usr/bin/env bash
+          n=0
+          while (($n<=3));do
+            echo "hello world!"
+            n=$((n+1))
+            sleep 10
+          done
+        isZipFile: false
+        timeoutTime: 30
+        timeoutUnit: minute
+        id: job1
+      - name: job2
+        description: job2
+        cmd: ''
+        cmdArgs: []
+        depends:
+          - job1
+        maxLiveLog: 10000
+        fileContent: |
+          #!/usr/bin/env bash
+          n=0
+          while (($n<=3));do
+            echo "hello world!"
+            n=$((n+1))
+            sleep 10
+          done
+        isZipFile: false
+        timeoutTime: 30
+        timeoutUnit: minute
+        id: '4912315993'
+      - name: job3
+        description: ''
+        cmd: ''
+        cmdArgs: []
+        depends:
+          - '4912315993'
+        maxLiveLog: 100
+        fileContent: ''
+        isZipFile: false
+        timeoutTime: 0
+        timeoutUnit: second
+        id: '1677641956'
+      - name: job4
+        description: ''
+        cmd: ''
+        cmdArgs: []
+        depends:
+          - '1677641956'
+        maxLiveLog: 100
+        fileContent: ''
+        isZipFile: false
+        timeoutTime: 0
+        timeoutUnit: second
+        id: '5133168472'

@@ -1,0 +1,14 @@
+[tool.poetry]
+name = "src"
+version = "0.1.0"
+description = "This is a project that deploy ReplitLM model and the user uses grpc to communicate with ReplitLM."
+authors = ["huangzheng00111069"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

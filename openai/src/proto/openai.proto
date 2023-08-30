@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package chatgpt;
+
+// The chatbot service definition.
+service ChatBot {
+  // Send prompt to ChatGPT
+  rpc SendPrompt (ChatRequest) returns (ChatResponse) {}
+}
+
+// The request message.
+message ChatRequest {
+  string prompt = 1;
+  string conversationId = 2;
+}
+
+// The response message.
+message ChatResponse {
+  string ret = 1;
+  int32 code = 2;
+  string msg = 3;
+}

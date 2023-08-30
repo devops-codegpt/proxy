@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "src"
+version = "0.1.0"
+description = "a ChatGPT proxy for use openai API by GPRC"
+authors = ["Jack"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+openai = "^0.27.2"
+tiktoken = "^0.2.0"
+grpcio = "^1.51.1"
+python-dotenv = "^0.21.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
